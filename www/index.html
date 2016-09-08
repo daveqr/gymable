@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Gymable</title>
+
+    <link href="vendor/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	
+   <!-- ionic/angularjs js -->
+   <script src="vendor/ionic/js/ionic.bundle.js"></script>
+	
+	<script src="gymable.js"></script>
+   <script src="gymable.constant.standard_weights.js"></script>
+	<script src="gymable.constant.micro_weights.js"></script>
+	<script src="gymable.constant.standard_bars.js"></script>
+   <script src="services/plates.service.js"></script>
+	
+   <!-- cordova script (this will be a 404 during development) -->
+   <script src="cordova.js"></script>
+
+   <script src="vendor/lodash.min.js"></script>
+</head>
+
+<body ng-app="gymable" ng-controller="GymableCtrl as gymable"  ng-cloak>
+
+    <ion-pane>
+        <ion-header-bar class="bar-assertive">
+            <h1 class="title">Gymable</h1>
+        </ion-header-bar>
+
+
+        <ion-content>
+			<form>
+				<div class="list">
+					<ion-radio ng-model="gymable.selectedBar" ng-value="gymable.ezWeight" ng-change="gymable.changeBar()">EZ Curl ({{gymable.ezWeight}} lbs)</ion-radio>
+					<ion-radio ng-model="gymable.selectedBar" ng-value="gymable.olympicWeight" ng-change="gymable.changeBar()">Olympic Barbell ({{gymable.olympicWeight}} lbs)</ion-radio>
+				</div>
+            
+				<div class="range" style="width:100%">
+					<span>
+						<i class="icon ion-ios7-minus-outline" style="font-size:55px" ng-click="gymable.decreaseWeight()"></i>
+					</span>
+
+					<input id="weightRange" type="range" ng-model="gymable.totalWeight" min="{{gymable.selectedBar}}" max="500" ng-change="gymable.findPlateCounts()" />
+
+					<span>
+						<i class="icon icon ion-ios7-plus-outline" style="font-size:55px" ng-click="gymable.increaseWeight()"></i>
+					</span>
+				</div>
+		
+				<output>{{ gymable.totalWeight }}</output>
+				{{ JSON.stringify(gymable.plateCounts, null, 4) }}
+			</form>
+				{{gymable.plateCounts}}
+			
+        </ion-content>
+
+        <div class="bar bar-footer bar-light">
+            <div class="title">Footer</div>
+        </div>
+    </ion-pane>
+</body>
+
+</html>
